@@ -73,7 +73,7 @@ function increment() {
 function incrementAsync() {
   return (dispatch) => {
     setTimeout(() => {
-      // `dispatch`で同期アクションと非同期アクションを呼び出すことができます。
+      // `dispatch`でsync actionとasync actionを呼び出すことができます。
       dispatch(increment());
     }, 1000);
   };
@@ -290,7 +290,7 @@ function fetchUser(id) {
 }
 ```
 
-複数の値を渡したい場合は、それらを1つのオブジェクトに入れます。ES2015のshorthand property namesを使うとより簡潔に書くことができます。
+複数の値を渡したい場合は、それらを1つのオブジェクトにまとめる。ES2015のshorthand property namesを使うとより簡潔に書くことができます。
 
 ```js
 const api = "http://www.example.com/sandwiches/";
@@ -304,7 +304,7 @@ const store = createStore(
 // 後ほど
 function fetchUser(id) {
   return (dispatch, getState, { api, whatever }) => {
-    // カスタム引数の`api`とそれ以外は、ここで使うことができます。
+    // カスタム引数の`api`とその他は、ここで使うことができます。
   };
 }
 ```
