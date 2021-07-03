@@ -290,7 +290,7 @@ function fetchUser(id) {
 }
 ```
 
-複数の値を渡したい場合は、それらを1つのオブジェクトにまとめる。ES2015のshorthand property namesを使うとより簡潔に書くことができます。
+複数の値を渡したい場合は、それらを1つのオブジェクトにまとめます。ES2015のshorthand property namesを使うとより簡潔に書くことができます。
 
 ```js
 const api = "http://www.example.com/sandwiches/";
