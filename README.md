@@ -1,92 +1,65 @@
 # Redux Thunk
 
-Thunk [middleware](https://redux.js.org/advanced/middleware) for Redux.
+Reduxの[middleware](https://redux.js.org/advanced/middleware)をThunkする。
 
-[![build status](https://img.shields.io/travis/reduxjs/redux-thunk/master.svg?style=flat-square)](https://travis-ci.org/reduxjs/redux-thunk)
-[![npm version](https://img.shields.io/npm/v/redux-thunk.svg?style=flat-square)](https://www.npmjs.com/package/redux-thunk)
-[![npm downloads](https://img.shields.io/npm/dm/redux-thunk.svg?style=flat-square)](https://www.npmjs.com/package/redux-thunk)
+## 2.xへUpdateする際の注意点
 
-```sh
-npm install redux-thunk
-
-yarn add redux-thunk
-```
-
-## Note on 2.x Update
-
-Most tutorials today assume that you're using Redux Thunk 1.x. You may run into
-issues when you run their code with 2.x. **If you use Redux Thunk 2.x in
-CommonJS environment,
-[don’t forget to add `.default` to your import](https://github.com/reduxjs/redux-thunk/releases/tag/v2.0.0):**
+今あるチュートリアルはReact Thunk 1.xを対象にしている物がほとんどです。React Thunk 2.xでそれを試すと問題が生じるかもしれません。**CommonJSでRedux Thunk 2.xを
+[インポートする時は`.default`を付けることを忘れないでください。](https://github.com/reduxjs/redux-thunk/releases/tag/v2.0.0)**
 
 ```diff
 - const ReduxThunk = require('redux-thunk')
 + const ReduxThunk = require('redux-thunk').default
 ```
 
-If you used ES modules, you’re already all good:
+ES modulesを使っている場合、変更する必要はありません。
 
 ```js
-import ReduxThunk from 'redux-thunk'; // no changes here 😀
+import ReduxThunk from 'redux-thunk'; // 変更なし 😀
 ```
 
-Additionally, since 2.x, we also support a
-[UMD build](https://unpkg.com/redux-thunk/dist/redux-thunk.min.js):
+2.xから[UMD build](https://unpkg.com/redux-thunk/dist/redux-thunk.min.js)をサポートします。
 
 ```js
 const ReduxThunk = window.ReduxThunk.default;
 ```
 
-As you can see, it also requires `.default` at the end.
+見ての通り、これも末尾に`.default`が必要です。
 
-## Why Do I Need This?
+## なぜRedux Thunkが必要なのか？
 
-With a plain basic Redux store, you can only do simple synchronous updates by
-dispatching an action. Middleware extends the store's abilities, and lets you
-write async logic that interacts with the store.
+素のRedux storeはactionをdispatchすることによるシンプルで同期的な更新しかできません。middlewareはstoreの可能性を拡張します。そして、dispatchとstoreの間で非同期ロジックを書くことを可能にします。
 
-Thunks are the recommended middleware for basic Redux side effects logic,
-including complex synchronous logic that needs access to the store, and simple
-async logic like AJAX requests.
+Redux Thunkは、storeにアクセスする必要がある複雑な同期ロジックや単純なAjaxリクエストような非同期ロジックが含まれる基本的なRedux side effectロジックに適したmiddlewareです。
 
-For more details on why thunks are useful, see:
+Redux Thunkの有用性に関する詳しい内容は以下の記事にあります。
 
 - **Stack Overflow: Dispatching Redux Actions with a Timeout**  
   http://stackoverflow.com/questions/35411423/how-to-dispatch-a-redux-action-with-a-timeout/35415559#35415559  
-  Dan Abramov explains the basics of managing async behavior in Redux, walking
-  through a progressive series of approaches (inline async calls, async action
-  creators, thunk middleware).
+  Dan Abramovが段階的に改善過程(inline async calls, async action creators, thunk middleware)を説明しながらReduxでの非同期処理の基本を説明しています。 
 
 - **Stack Overflow: Why do we need middleware for async flow in Redux?**  
   http://stackoverflow.com/questions/34570758/why-do-we-need-middleware-for-async-flow-in-redux/34599594#34599594  
-  Dan Abramov gives reasons for using thunks and async middleware, and some
-  useful patterns for using thunks.
+  Dan AbramovがThunkと非同期middlewareを使う理由とThunkを使った便利なパターンを説明しています。
 
 - **What the heck is a "thunk"?**  
   https://daveceddia.com/what-is-a-thunk/  
-  A quick explanation for what the word "thunk" means in general, and for Redux
-  specifically.
+  "thunk"の一般的な意味とそれのReduxを使った具体的な説明
 
 - **Thunks in Redux: The Basics**  
   https://medium.com/fullstack-academy/thunks-in-redux-the-basics-85e538a3fe60  
-  A detailed look at what thunks are, what they solve, and how to use them.
+  thunkとは何か、何を解決するのか、その使い方の詳解
 
-You may also want to read the
-**[Redux FAQ entry on choosing which async middleware to use](https://redux.js.org/faq/actions#what-async-middleware-should-i-use-how-do-you-decide-between-thunks-sagas-observables-or-something-else)**.
 
-While the thunk middleware is not directly included with the Redux core library,
-it is used by default in our
-**[`@reduxjs/toolkit` package](https://github.com/reduxjs/redux-toolkit)**.
+**[Redux FAQの非同期middlewareの選択](https://redux.js.org/faq/actions#what-async-middleware-should-i-use-how-do-you-decide-between-thunks-sagas-observables-or-something-else)** を読むことをお勧めします。
 
-## Motivation
+このRedux Thunk middlewareはReduxコアライブラリに含まれていません。私たちが提供している **[`@reduxjs/toolkit`](https://github.com/reduxjs/redux-toolkit)** ではデフォルトで使われています。
 
-Redux Thunk [middleware](https://redux.js.org/advanced/middleware)
-allows you to write action creators that return a function instead of an action.
-The thunk can be used to delay the dispatch of an action, or to dispatch only if
-a certain condition is met. The inner function receives the store methods
-`dispatch` and `getState` as parameters.
+## React Thunkを使う理由
 
-An action creator that returns a function to perform asynchronous dispatch:
+Redux Thunk [middleware](https://redux.js.org/advanced/middleware)を使うと、actionの代わりに関数を返すaction creatorを書くことができるようになります。React Thunkを使うとactionがdispatchされるタイミングを遅らせたり、条件に応じてdispatchすることができます。action creatorの内側の関数はstoreのメソッドである`dispatch`と`getState`を引数として受け取ります。
+
+非同期でdispatchを行う関数を返すaction creator
 
 ```js
 const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
@@ -100,14 +73,14 @@ function increment() {
 function incrementAsync() {
   return (dispatch) => {
     setTimeout(() => {
-      // Yay! Can invoke sync or async actions with `dispatch`
+      // `dispatch`で同期アクションと非同期アクションを呼び出すことができます。
       dispatch(increment());
     }, 1000);
   };
 }
 ```
 
-An action creator that returns a function to perform conditional dispatch:
+条件に応じてdispatchする関数を返すaction creator
 
 ```js
 function incrementIfOdd() {
@@ -123,65 +96,59 @@ function incrementIfOdd() {
 }
 ```
 
-## What’s a thunk?!
+## thunkって何？
 
-A [thunk](https://en.wikipedia.org/wiki/Thunk) is a function that wraps an
-expression to delay its evaluation.
+[thunk](https://en.wikipedia.org/wiki/Thunk)は評価を遅延させるために式をラップする関数です。
 
 ```js
-// calculation of 1 + 2 is immediate
+// 1 + 2の計算はすぐに実行されます。
 // x === 3
 let x = 1 + 2;
 
-// calculation of 1 + 2 is delayed
-// foo can be called later to perform the calculation
-// foo is a thunk!
+// 1 + 2の計算は遅延します。
+// あとでfooを呼び出した時に
+// fooがthunkです。
 let foo = () => 1 + 2;
 ```
 
-The term [originated](https://en.wikipedia.org/wiki/Thunk#cite_note-1) as a
-humorous past-tense version of "think".
+この用語の[語源](https://en.wikipedia.org/wiki/Thunk#cite_note-1)は"think"の過去形のおどけた表現です。
 
-## Installation
+## インストール
 
 ```bash
 npm install redux-thunk
 ```
 
-Then, to enable Redux Thunk, use
-[`applyMiddleware()`](https://redux.js.org/api/applymiddleware):
+Redux Thunkを有効にするために[`applyMiddleware()`](https://redux.js.org/api/applymiddleware)を使います。
 
 ```js
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/index';
 
-// Note: this API requires redux@>=3.1.0
+// このAPIはredux@>=3.1.0で使えます。
 const store = createStore(rootReducer, applyMiddleware(thunk));
 ```
 
-## Composition
+## 非同期のコントロールフローの構築
 
-Any return value from the inner function will be available as the return value
-of `dispatch` itself. This is convenient for orchestrating an asynchronous
-control flow with thunk action creators dispatching each other and returning
-Promises to wait for each other’s completion:
+action creatorの内側の関数で、その引数である`dispatch`の戻り値を戻り値にするとします。こうするとthunk形式のaction creator内で別のthunk形式のaction creatorをdispatchして、それの戻り値のPromiseの完了を待つような非同期のコントロールフローを構築することが容易になります。
 
 ```js
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
 
-// Note: this API requires redux@>=3.1.0
+// このAPIはredux@>=3.1.0で使えます。
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 function fetchSecretSauce() {
   return fetch('https://www.google.com/search?q=secret+sauce');
 }
 
-// These are the normal action creators you have seen so far.
-// The actions they return can be dispatched without any middleware.
-// However, they only express “facts” and not the “async flow”.
+// これらは普段使っている普通のaction creatorです。
+// これらが返すactionはmiddlewareなしでdispatchすることができます。
+// そのactionは単に“facts”を表しているのみであり、“async flow”を表していません。
 
 function makeASandwich(forPerson, secretSauce) {
   return {
@@ -207,21 +174,19 @@ function withdrawMoney(amount) {
   };
 }
 
-// Even without middleware, you can dispatch an action:
+// middlewareなしでも、actionをdispatchすることができます。
 store.dispatch(withdrawMoney(100));
 
-// But what do you do when you need to start an asynchronous action,
-// such as an API call, or a router transition?
+// では、APIの呼び出しやrouterのトランジションのようなasync actionを開始する必要がある場合はどうしますか？
 
-// Meet thunks.
-// A thunk in this context is a function that can be dispatched to perform async
-// activity and can dispatch actions and read state.
-// This is an action creator that returns a thunk:
+// そこで、thunkの登場です。
+// ここでいうthunkとは非同期処理を実行するためにdispatchされる関数でactionをdispatchすることができてstateを読み込むことができます。
+// これはthunkを返すaction creatorです。
 function makeASandwichWithSecretSauce(forPerson) {
-  // We can invert control here by returning a function - the "thunk".
-  // When this function is passed to `dispatch`, the thunk middleware will intercept it,
-  // and call it with `dispatch` and `getState` as arguments.
-  // This gives the thunk function the ability to run some logic, and still interact with the store.
+  // "thunk"形式の関数を返すことによって制御を別の物に変更することができます。
+  // この関数が`dispatch`に渡されると、React Thunk middlewareは通常とは別ルートの処理を行います。
+  // その処理は`dispatch`と`getState`を引数として渡して実行する処理です。
+  // これによって、thunk関数内でロジックを実行したり、storeを操作することが可能になります。
   return function(dispatch) {
     return fetchSecretSauce().then(
       (sauce) => dispatch(makeASandwich(forPerson, sauce)),
@@ -230,33 +195,30 @@ function makeASandwichWithSecretSauce(forPerson) {
   };
 }
 
-// Thunk middleware lets me dispatch thunk async actions
-// as if they were actions!
+// React Thunk middlewareを使うと、thunk形式のasync actionを普通のactionのようにdispatchすることができます。
 
 store.dispatch(makeASandwichWithSecretSauce('Me'));
 
-// It even takes care to return the thunk’s return value
-// from the dispatch, so I can chain Promises as long as I return them.
+// dispatchはthunkの戻り値を返すようになっています
+// だから、Promiseをthunkが返した場合、それのチェインをすることができます。
 
 store.dispatch(makeASandwichWithSecretSauce('My partner')).then(() => {
   console.log('Done!');
 });
 
-// In fact I can write action creators that dispatch
-// actions and async actions from other action creators,
-// and I can build my control flow with Promises.
+// 実際には、他のaction creatorから生成した普通のactionやasync actionをdispatchするaction creatorを書くことができます。
+// そして、Promiseを使ってコントロールフローを構築することができます。
 
 function makeSandwichesForEverybody() {
   return function(dispatch, getState) {
     if (!getState().sandwiches.isShopOpen) {
-      // You don’t have to return Promises, but it’s a handy convention
-      // so the caller can always call .then() on async dispatch result.
+      // Promiseを返す必要はありませんが、これは便利なやり方です。
+      // これで、呼び出し元はasync actionをdispatchした結果に対して常に`.then()`を実行することができます。
 
       return Promise.resolve();
     }
 
-    // We can dispatch both plain object actions and other thunks,
-    // which lets us compose the asynchronous actions in a single flow.
+    // 素のactionオブジェクトとthunkをdispatchすることができます。複数のasync actionで1つのフローを構成することができます。
 
     return dispatch(makeASandwichWithSecretSauce('My Grandma'))
       .then(() =>
@@ -276,8 +238,7 @@ function makeSandwichesForEverybody() {
   };
 }
 
-// This is very useful for server side rendering, because I can wait
-// until data is available, then synchronously render the app.
+// データが利用可能になるまで待ってから、同期的にアプリケーションをレンダリングすることができるので、これはとても便利です。
 
 store
   .dispatch(makeSandwichesForEverybody())
@@ -285,8 +246,7 @@ store
     response.send(ReactDOMServer.renderToString(<MyApp store={store} />)),
   );
 
-// I can also dispatch a thunk async action from a component
-// any time its props change to load the missing data.
+// propsが変更された時は必要なデータを取得するために、コンポーネントからthunk形式のasync actionをdispatchすることができます。
 
 import { connect } from 'react-redux';
 import { Component } from 'react';
@@ -312,10 +272,9 @@ export default connect((state) => ({
 }))(SandwichShop);
 ```
 
-## Injecting a Custom Argument
+## カスタム引数の注入
 
-Since 2.1.0, Redux Thunk supports injecting a custom argument using the
-`withExtraArgument` function:
+2.1.0から、`withExtraArgument`関数を使うとカスタム引数の注入ができるようになります。
 
 ```js
 const store = createStore(
@@ -323,16 +282,15 @@ const store = createStore(
   applyMiddleware(thunk.withExtraArgument(api)),
 );
 
-// later
+// 後ほど
 function fetchUser(id) {
   return (dispatch, getState, api) => {
-    // you can use api here
+    // カスタム引数の`api`は、ここで使うことができます。
   };
 }
 ```
 
-To pass multiple things, just wrap them in a single object. 
-Using ES2015 shorthand property names can make this more concise.
+複数の値を渡したい場合は、それらを1つのオブジェクトに入れます。ES2015のshorthand property namesを使うとより簡潔に書くことができます。
 
 ```js
 const api = "http://www.example.com/sandwiches/";
@@ -343,34 +301,30 @@ const store = createStore(
   applyMiddleware(thunk.withExtraArgument({ api, whatever })),
 );
 
-// later
+// 後ほど
 function fetchUser(id) {
   return (dispatch, getState, { api, whatever }) => {
-    // you can use api and something else here
+    // カスタム引数の`api`とそれ以外は、ここで使うことができます。
   };
 }
 ```
 
 ## License
 
+### Japanese part
+
+Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
+
+Copyright (c) 2021 38elements
+
+### Other
+
 The MIT License (MIT)
 
 Copyright (c) 2015-present Dan Abramov
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
