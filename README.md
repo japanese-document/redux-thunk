@@ -57,7 +57,7 @@ Redux Thunkの有用性に関する詳しい内容は以下の記事にありま
 
 ## React Thunkを使う理由
 
-Redux Thunk [middleware](https://redux.js.org/advanced/middleware)を使うと、actionの代わりに関数を返すaction creatorを書くことができるようになります。React Thunkを使うとactionがdispatchされるタイミングを遅らせたり、条件に応じてdispachすることができます。action creatorの内側の関数はstoreのメソッドである`dispatch`と`getState`を引数として受け取ります。
+Redux Thunk [middleware](https://redux.js.org/advanced/middleware)を使うと、actionの代わりに関数を返すaction creatorを書くことができるようになります。React Thunkを使うとactionがdispatchされるタイミングを遅らせたり、条件に応じてdispatchすることができます。action creatorの内側の関数はstoreのメソッドである`dispatch`と`getState`を引数として受け取ります。
 
 非同期でdispatchを行う関数を返すaction creator
 
@@ -132,7 +132,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ## 非同期のコントロールフローの構築
 
-action creatorの内側の関数で、その引数である`dispatch`の戻り値を戻り値にするとします。こうするとthunk action creator内で別のthunk action creatorをdispatchして、それの戻り値のPromiseの完了を待つような非同期のコントロールフローを構築することが容易になります。
+action creatorの内側の関数で、その引数である`dispatch`の戻り値を戻り値にするとします。こうするとthunk形式のaction creator内で別のthunk形式のaction creatorをdispatchして、それの戻り値のPromiseの完了を待つような非同期のコントロールフローを構築することが容易になります。
 
 ```js
 import { createStore, applyMiddleware } from 'redux';
@@ -185,7 +185,7 @@ store.dispatch(withdrawMoney(100));
 function makeASandwichWithSecretSauce(forPerson) {
   // "thunk"形式の関数を返すことによって制御を別の物に変更することができます。
   // この関数が`dispatch`に渡されると、React Thunk middlewareは通常とは別ルートの処理を行います。
-  // その処理は`dispatch`と`getState`を引数として渡して実行することです。
+  // その処理は`dispatch`と`getState`を引数として渡して実行する処理です。
   // これによって、thunk関数内でロジックを実行したり、storeを操作することが可能になります。
   return function(dispatch) {
     return fetchSecretSauce().then(
