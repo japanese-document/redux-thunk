@@ -1,6 +1,6 @@
 # Redux Thunk
 
-Reduxの[middleware](https://redux.js.org/advanced/middleware)をThunkする。
+ReduxのThunk [middleware](https://redux.js.org/advanced/middleware)
 
 ## 2.xへUpdateする際の注意点
 
