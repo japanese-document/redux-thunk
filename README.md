@@ -30,7 +30,7 @@ const ReduxThunk = window.ReduxThunk.default;
 
 素のRedux storeはactionをdispatchすることによるシンプルで同期的な更新しかできません。middlewareはstoreの可能性を拡張します。そして、dispatchとstoreの間で非同期ロジックを書くことを可能にします。
 
-Redux Thunkは、storeにアクセスする必要がある複雑な同期ロジックや単純なAjaxリクエストような非同期ロジックが含まれる基本的なRedux side effectロジックに適したmiddlewareです。
+[Redux Thunk](https://github.com/reduxjs/redux-thunk)は、storeにアクセスする必要がある複雑な同期ロジックや単純なAjaxリクエストような非同期ロジックが含まれる基本的なRedux side effectロジックに適したmiddlewareです。
 
 Redux Thunkの有用性に関する詳しい内容は以下の記事にあります。
 
