@@ -132,7 +132,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ## 非同期のコントロールフローの構築
 
-action creatorの内側の関数で、その引数である`dispatch`の戻り値を戻り値にするとします。こうするとthunk形式のaction creator内で別のthunk形式のaction creatorをdispatchして、それの戻り値のPromiseの完了を待つような非同期のコントロールフローを構築することが容易になります。
+thunk形式のaction creatorの内側の関数で、その引数である`dispatch`の戻り値を戻り値にするとします。こうするとthunk形式のaction creator内で別のthunk形式のaction creatorをdispatchして、それの戻り値のPromiseの完了を待つような非同期のコントロールフローを構築することが容易になります。
 
 ```js
 import { createStore, applyMiddleware } from 'redux';
