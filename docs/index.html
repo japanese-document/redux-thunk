@@ -305,7 +305,7 @@ thunkとは何か、何を解決するのか、その使い方の詳解</p>
   <span class="nx">applyMiddleware</span><span class="p">(</span><span class="nx">thunk</span><span class="p">.</span><span class="nx">withExtraArgument</span><span class="p">(</span><span class="nx">api</span><span class="p">)),</span>
 <span class="p">);</span>
 
-<span class="c1">// 後ほど</span>
+<span class="c1">// 後で</span>
 <span class="kd">function</span> <span class="nx">fetchUser</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">,</span> <span class="nx">getState</span><span class="p">,</span> <span class="nx">api</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// カスタム引数の`api`は、ここで使うことができます。</span>
@@ -323,7 +323,7 @@ thunkとは何か、何を解決するのか、その使い方の詳解</p>
   <span class="nx">applyMiddleware</span><span class="p">(</span><span class="nx">thunk</span><span class="p">.</span><span class="nx">withExtraArgument</span><span class="p">({</span> <span class="nx">api</span><span class="p">,</span> <span class="nx">whatever</span> <span class="p">})),</span>
 <span class="p">);</span>
 
-<span class="c1">// 後ほど</span>
+<span class="c1">// 後で</span>
 <span class="kd">function</span> <span class="nx">fetchUser</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">,</span> <span class="nx">getState</span><span class="p">,</span> <span class="p">{</span> <span class="nx">api</span><span class="p">,</span> <span class="nx">whatever</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="c1">// カスタム引数の`api`とその他は、ここで使うことができます。</span>
