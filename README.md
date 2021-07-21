@@ -282,7 +282,7 @@ const store = createStore(
   applyMiddleware(thunk.withExtraArgument(api)),
 );
 
-// 後ほど
+// 後で
 function fetchUser(id) {
   return (dispatch, getState, api) => {
     // カスタム引数の`api`は、ここで使うことができます。
@@ -301,7 +301,7 @@ const store = createStore(
   applyMiddleware(thunk.withExtraArgument({ api, whatever })),
 );
 
-// 後ほど
+// 後で
 function fetchUser(id) {
   return (dispatch, getState, { api, whatever }) => {
     // カスタム引数の`api`とその他は、ここで使うことができます。
