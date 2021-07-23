@@ -209,9 +209,9 @@ thunkとは何か、何を解決するのか、その使い方の詳解</p>
 <span class="kd">function</span> <span class="nx">makeASandwichWithSecretSauce</span><span class="p">(</span><span class="nx">forPerson</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// "thunk"形式の関数を返すことによって制御を別の物に変更することができます。</span>
   <span class="c1">// この関数が`dispatch`に渡されると、React Thunk middlewareは通常とは別ルートの処理を行います。</span>
-  <span class="c1">// その処理は`dispatch`と`getState`を引数として渡して実行する処理です。</span>
+  <span class="c1">// その処理はその関数に`dispatch`と`getState`を引数として渡して実行する処理です。</span>
   <span class="c1">// これによって、thunk関数内でロジックを実行したり、storeを操作することが可能になります。</span>
-  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dispatch</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dispatch</span><span class="p">,</span> <span class="nx">getState</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">fetchSecretSauce</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span>
       <span class="p">(</span><span class="nx">sauce</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">makeASandwich</span><span class="p">(</span><span class="nx">forPerson</span><span class="p">,</span> <span class="nx">sauce</span><span class="p">)),</span>
       <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">apologize</span><span class="p">(</span><span class="dl">'</span><span class="s1">The Sandwich Shop</span><span class="dl">'</span><span class="p">,</span> <span class="nx">forPerson</span><span class="p">,</span> <span class="nx">error</span><span class="p">)),</span>
