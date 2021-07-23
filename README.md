@@ -185,9 +185,9 @@ store.dispatch(withdrawMoney(100));
 function makeASandwichWithSecretSauce(forPerson) {
   // "thunk"形式の関数を返すことによって制御を別の物に変更することができます。
   // この関数が`dispatch`に渡されると、React Thunk middlewareは通常とは別ルートの処理を行います。
-  // その処理は`dispatch`と`getState`を引数として渡して実行する処理です。
+  // その処理はその関数に`dispatch`と`getState`を引数として渡して実行する処理です。
   // これによって、thunk関数内でロジックを実行したり、storeを操作することが可能になります。
-  return function(dispatch) {
+  return function(dispatch, getState) {
     return fetchSecretSauce().then(
       (sauce) => dispatch(makeASandwich(forPerson, sauce)),
       (error) => dispatch(apologize('The Sandwich Shop', forPerson, error)),
