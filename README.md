@@ -199,7 +199,7 @@ function makeASandwichWithSecretSauce(forPerson) {
 
 store.dispatch(makeASandwichWithSecretSauce('Me'));
 
-// dispatchはthunkの戻り値を返すようになっています
+// dispatchはthunkの戻り値を返すようになっています。
 // だから、Promiseをthunkが返した場合、それのチェインをすることができます。
 
 store.dispatch(makeASandwichWithSecretSauce('My partner')).then(() => {
